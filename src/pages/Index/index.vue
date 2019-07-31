@@ -6,7 +6,8 @@
       <a href="#chosemore">多选</a>
       <a href="#choseone">单选</a>
       <a href="#autoinput">输入框模糊匹配</a>
-      <a href="#upload">上传</a>
+      <a href="#uploadImg">图片上传</a>
+      <a href="#uploadExcel">文件上传</a>
       <a href="#chosearea">地区级联</a>
       <a href="#searchimg">查看图片</a>
       <a href="#page">公用分页，保存查询条件</a>
@@ -289,25 +290,35 @@
         </el-collapse-item>
       </el-collapse>
       <hr>
-      <h2 id="upload">附件上传</h2>
+      <h2 id="uploadImg">图片上传</h2>
+      <upload-img
+        import-url="https://jsonplaceholder.typicode.com/posts/"
+        uploadTitle="图片上传"
+        uploadType="image"
+        initClass="true"
+        @on-success="handSuccessImg"
+      ></upload-img>
+      <div class="question">
+        <p v-for="item in uploadImgUrl">{{ item }}</p>
+      </div>
+      <hr>
+      <h2 id="uploadExcel">文件上传</h2>
       <el-button type="primary" @click="dialogUpload = true">上传</el-button>
       <div class="question">
         {{uploadName}}
       </div>
-      <upload
+      <upload-excel
         :dialog-visible="dialogUpload"
         intiTitle="附件上传名称"
-        import-url="https://jsonplaceholder.typicode.com/posts/"
         templateName="兼职竞拍上传模板.xlsx"
-        errorTitle="这里是上次错误后的原因显示"
         @on-cancel="dialogUpload = false"
-        @on-success="handSuccess"
-      ></upload>
+        @on-getVal="handSuccessExcel"
+      ></upload-excel>
       <el-collapse>
         <el-collapse-item title="查看代码">
           <pre>
 
-            // 调用方式：（组件名：upload）
+            // 调用方式：（组件名：upload-excel）
             <
               :dialog-visible="dialogUpload"
               intiTitle="附件上传名称"
@@ -740,14 +751,15 @@
   import choseMore from '../../components/choseMore'
   import choseOne from '../../components/choseOne'
   import choseMan from '../../components/choseMan'
-  import upload from '../../components/upload'
+  import uploadImg from '../../components/uploadImg'
+  import uploadExcel from '../../components/uploadExcel'
   import bigImg from '../../components/bigImg'
   import { isNull, isNumber, isSpecial, isChinese, isPhone, isMoney, isIdCard, changeDate, changeTimestamp } from '../../mixin/regular.js'
   // 分页公用 必须引入
   import initPageJs from '../../mixin/init-page'
   export default {
     name: 'index',
-    components: { choseMan, choseOne, choseMore, autoInput, upload, choseArea, bigImg },
+    components: { choseMan, choseOne, choseMore, autoInput, uploadImg, uploadExcel, choseArea, bigImg },
     mixins: [initPageJs],
     data () {
       return {
@@ -823,6 +835,8 @@
         ],
         // 动态输入模糊匹配
         inputName: '',
+        // 上次成功后的图片
+        uploadImgUrl: [],
         // 上传成功后的文件
         uploadName: '',
         // 选择地区
@@ -895,8 +909,15 @@
       listenVlaue (val) {
         this.inputName = val.value
       },
+      // 图片上传成功后的操作
+      handSuccessImg(val) {
+        this.uploadImgUrl = []
+        val.forEach(item => {
+          this.uploadImgUrl.push(item.name)
+        })
+      },
       // 上传成功后的操作
-      handSuccess (val) {
+      handSuccessExcel (val) {
         this.uploadName = val[0].name
       },
       // 获取地区
@@ -978,7 +999,7 @@
         if (this.js.selectValue === '+') {
           this.result.jingduBeforeSum = Number(this.js.firstNum) + Number(this.js.lastNum)
           this.result.jingduAfterSum = this.$floatObj.add(this.js.firstNum, this.js.lastNum)
-        }
+        }n
         if (this.js.selectValue === '-') {
           this.result.jingduBeforeSum = Number(this.js.firstNum) - Number(this.js.lastNum)
           this.result.jingduAfterSum = this.$floatObj.subtract(this.js.firstNum, this.js.lastNum)
