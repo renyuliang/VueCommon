@@ -1,9 +1,8 @@
 <template>
   <div>
     <el-upload
-      v-if="!initClass"
       v-loading="loading"
-      class="upload-demo"
+      :class="{'upload-demo': !initClass ? 'avatar-uploader' : initClass}"
       :action="importUrl"
       :show-file-list="fileList"
       :before-upload="beforeAvatarUpload"
@@ -11,21 +10,13 @@
       :on-progress="handProgress"
       :on-error="handError"
       :on-success="handSuccess">
-      <el-button size="small" type="primary">{{ uploadTitle }}</el-button>
-    </el-upload>
-    <el-upload
-      v-if="initClass"
-      class="avatar-uploader"
-      v-loading="loading"
-      :action="importUrl"
-      :show-file-list="fileList"
-      :before-upload="beforeAvatarUpload"
-      :accept="uploadType === 'image' ? 'image/jpeg,image/jpg,image/png' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
-      :on-progress="handProgress"
-      :on-error="handError"
-      :on-success="handSuccess">
-      <div class="avatar"></div>
-      <i class="el-icon-plus avatar-uploader-icon"></i>
+      <div v-if="!initClass">
+        <el-button size="small" type="primary">{{ uploadTitle }}</el-button>
+      </div>
+      <div v-if="initClass">
+        <div class="avatar"></div>
+        <i class="el-icon-plus avatar-uploader-icon"></i>
+      </div>
     </el-upload>
   </div>
 </template>
