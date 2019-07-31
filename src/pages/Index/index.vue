@@ -301,6 +301,29 @@
       <div class="question">
         <p v-for="item in uploadImgUrl">{{ item }}</p>
       </div>
+      <el-collapse>
+        <el-collapse-item title="查看代码">
+          <pre>
+
+            // 调用方式：（组件名：upload-img）
+            <
+              import-url="https://jsonplaceholder.typicode.com/posts/"
+              uploadTitle="图片上传" // 按钮文案
+              uploadType="image"     // 设置上传类型为image
+              initClass="true"       // 自定义按钮样式，不需要则为false
+              @on-success="handSuccessImg" // 保存,返回数组
+            ></>
+
+          // 方法
+          handSuccessImg(val) {
+            this.uploadImgUrl = []
+            val.forEach(item => {
+              this.uploadImgUrl.push(item.name)
+            })
+          }
+          </pre>
+        </el-collapse-item>
+      </el-collapse>
       <hr>
       <h2 id="uploadExcel">文件上传</h2>
       <el-button type="primary" @click="dialogUpload = true">上传</el-button>
@@ -322,19 +345,17 @@
             <
               :dialog-visible="dialogUpload"
               intiTitle="附件上传名称"
-              import-url="https://jsonplaceholder.typicode.com/posts/" // url
               templateName="兼职竞拍上传模板.xlsx"
-              errorTitle="这里是上次错误后的原因显示"
               @on-cancel="dialogUpload = false"
-              @on-success="handSuccess" // 保存
+              @on-getVal="handSuccessExcel" // 保存
             ></>
 
           // 变量
           dialogUpload: false,
 
           // 方法
-          handSuccess (val) {
-          console.log(val[0].name)
+          handSuccessExcel (val) {
+            console.log(val[0].name)
           },
           </pre>
         </el-collapse-item>
