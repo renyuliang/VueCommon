@@ -296,6 +296,7 @@
         uploadTitle="图片上传"
         uploadType="image"
         initClass="true"
+        :multiple="true"
         @on-success="handSuccessImg"
       ></upload-img>
       <div class="question">
@@ -311,6 +312,7 @@
               uploadTitle="图片上传" // 按钮文案
               uploadType="image"     // 设置上传类型为image
               initClass="true"       // 自定义按钮样式，不需要则为false
+              :multiple="true"       // 是否支持多选，默认是false
               @on-success="handSuccessImg" // 保存,返回数组
             ></>
 

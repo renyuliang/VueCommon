@@ -4,6 +4,7 @@
       v-loading="loading"
       :class="{'upload-demo': !initClass ? 'avatar-uploader' : initClass}"
       :action="importUrl"
+      :multiple="multiple"
       :show-file-list="fileList"
       :before-upload="beforeAvatarUpload"
       :accept="uploadType === 'image' ? 'image/jpeg,image/jpg,image/png' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'"
@@ -44,6 +45,11 @@ export default {
     uploadType: {
       type: String,
       default: 'excel'
+    },
+    // 是否支持多选
+    multiple: {
+      type: Boolean,
+      default: false
     },
     initClass: false // 上传按钮隐藏，显示样式
   },
