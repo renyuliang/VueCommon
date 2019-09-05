@@ -20,6 +20,7 @@
       <a href="#chinese">汉字验证</a>
       <a href="#phone">手机号验证</a>
       <a href="#money">金额验证</a>
+      <a href="#moneyFocus">金额及时验证</a>
       <a href="#card">身份证验证</a>
       <a href="#jingdu">精度问题验证</a>
     </div>
@@ -608,6 +609,18 @@
           </code></pre>
         </el-collapse-item>
       </el-collapse>
+      <h2 id="moneyFocus">金额验证及时验证</h2>
+      <crab-number v-model="focusMoney" :maxlength="8" :precision="2" placeholder="金额验证及时验证"></crab-number>
+      {{focusMoney}}
+      <el-collapse>
+        <el-collapse-item title="查看代码">
+          <pre><code>
+            // 引入 组件
+            precision: 精度，默认输入整数
+          </code></pre>
+        </el-collapse-item>
+      </el-collapse>
+
       <h2 id="card">身份证验证</h2>
       <input type="text" class="input" v-model="js.card" @blur="blurCard">{{result.card}}
       <el-collapse>
@@ -769,6 +782,7 @@
   </div>
 </template>
 <script>
+  import crabNumber from '../../components/crab-number'
   import autoInput from '../../components/autoInput'
   import choseArea from '../../components/choseArea'
   import choseMore from '../../components/choseMore'
@@ -782,7 +796,7 @@
   import initPageJs from '../../mixin/init-page'
   export default {
     name: 'index',
-    components: { choseMan, choseOne, choseMore, autoInput, uploadImg, uploadExcel, choseArea, bigImg },
+    components: { choseMan, choseOne, choseMore, autoInput, uploadImg, uploadExcel, choseArea, bigImg, crabNumber},
     mixins: [initPageJs],
     data () {
       return {
@@ -907,7 +921,8 @@
           card: '',
           jingduBeforeSum: '', // 精度调试之前的结果
           jingduAfterSum: ''// 精度调试之后的结果
-        }
+        },
+        focusMoney: ''
       }
     },
     methods: {
