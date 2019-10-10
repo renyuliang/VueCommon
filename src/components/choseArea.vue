@@ -5,7 +5,7 @@
 <!--<chose-area v-model="areaName" :howLevel='2' showAllStatus = 'true' @on-change="getAreaName"/>-->
 <template>
   <div>
-    <el-cascader :filterable="true" :options="options" @change="selectArea" placeholder="请选择地区"/>
+    <el-cascader :filterable="true" change-on-select :options="options" @change="selectArea" placeholder="请选择地区"/>
   </div>
 </template>
 
