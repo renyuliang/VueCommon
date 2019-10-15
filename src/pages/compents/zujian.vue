@@ -110,6 +110,7 @@
 
               // 变量
               dialogChoseMore: false,
+              hospitalList: [],
               // 自定义搜索条件
               searchInitList: [
                 {

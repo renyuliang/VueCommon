@@ -59,8 +59,8 @@
               layout="prev, pager, next"
               background
               @current-change="handleCurrentChange"
-              :current-page="currentPage"
-              :page-size="pageSize"
+              :current-page="query.pageNum"
+              :page-size="query.pageSize"
               :total="total">
             </el-pagination>
           </div>
@@ -98,9 +98,7 @@ export default {
   data () {
     return {
       tableList: [],
-      currentPage: 1, // 当前页码
-      total: 7, // 总条数
-      pageSize: 8, // 每页的数据条数
+      total: 0, // 总条数
       query: {
         pageNum: 1,
         pageSize: 8
@@ -114,35 +112,33 @@ export default {
   methods: {
     // 筛选
     search () {
-      let _this = this
+      this.query.pageNum = 1
       var params = {}
       // 动态获取搜索条件值
-      for (var i = 0; i < _this.searchInitList.length; i++) {
-        params[_this.searchInitList[i].searchName] = _this.searchInitList[i].modelName
+      for (var i = 0; i < this.searchInitList.length; i++) {
+        params[this.searchInitList[i].searchName] = this.searchInitList[i].modelName
       }
       Object.assign(this.query, params)
-      console.log(this.query)
       this.loadPage()
     },
     // 重置
     reset () {
-      let _this = this
+      this.query.pageNum = 1
       var params = {}
       // 动态获取搜索条件值
-      for (var i = 0; i < _this.searchInitList.length; i++) {
-        params[_this.searchInitList[i].searchName] = '' // 接口字段置空
-        _this.searchInitList[i].modelName = '' // model置空
+      for (var i = 0; i < this.searchInitList.length; i++) {
+        params[this.searchInitList[i].searchName] = '' // 接口字段置空
+        this.searchInitList[i].modelName = '' // model置空
       }
       Object.assign(this.query, params)
-      console.log(this.query)
       this.loadPage()
     },
     // 加载table列表
     loadPage () {
-      let _this = this
-      _this.$axios.get(_this.tableInitUrl, _this.query)
+      this.$axios.get(this.tableInitUrl, this.query)
         .then((res) => {
-          _this.tableList = res.data.list
+          this.tableList = res.data.list
+          this.total = res.data.total
         })
     },
     // 医院分页处理

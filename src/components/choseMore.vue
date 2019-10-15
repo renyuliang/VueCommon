@@ -10,74 +10,74 @@
     width="1040px"
     top="7vh"
     :close-on-click-modal="false" :before-close="handleCancel">
-      <div>
-        <div class="pub-search">
-          <el-form :inline="true" size="mini">
-            <el-form-item :label="item.title" :key="index" v-for="(item,index) in searchInitList">
-              <el-input :maxlength="item.maxlength" v-model="item.modelName" :placeholder="item.placeholder" v-if="item.searchStyle === 'input'"/>
-              <el-select v-model="item.modelName" :placeholder="item.placeholder"  v-if="item.searchStyle === 'select'">
-                <el-option
-                  v-for="(item2,index) in item.options"
-                  :key="index"
-                  :label="item2.label"
-                  :value="item2.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
-              <el-button @click="reset">重置</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-        <div class="public_chose_people">
-          <el-row>
-            <el-col :span="17" class="visit_add_center">
-              <template>
-                <el-table
-                  ref="table"
-                  :data="tableList"
-                  style="width: 100%"
-                  class="tableset tabledialog"
-                  row-key="id"
-                  highlight-current-row
-                  @row-click="handleRowClick"
-                  @select="handleSelectionChange"
-                  @select-all="handleSelectionChange">
-                  <el-table-column
-                    type="selection"
-                    width="30"
-                    align="center">
-                  </el-table-column>
-                  <el-table-column
-                    v-for="(item,index) in tableInitProps"
-                    :key="index"
-                    :prop="item.name"
-                    :label="item.label"
-                    align="center">
-                  </el-table-column>
-                </el-table>
-              </template>
-              <div class="page">
-                <el-pagination
-                  layout="prev, pager, next"
-                  background
-                  @current-change="handleCurrentChange"
-                  :current-page="currentPage"
-                  :page-size="pageSize"
-                  :total="total">
-                </el-pagination>
-              </div>
-            </el-col>
-            <el-col :span="7" class="visit_add_right">
-              <h1>已选择</h1>
-              <div class="right_span scrollbar">
-                <span v-for="(item, index) in selectList" :key="item.id" v-cloak :title="item.name.length>6 ? item.name:''">{{item.name.length>6? (item.name.substring(0,6)+'...'): item.name}}<a href="javascript:" :id="item.id" @click="deleteChose(index)"><i class="el-icon-close"></i></a></span>
-              </div>
-            </el-col>
-          </el-row>
-        </div>
+    <div>
+      <div class="pub-search">
+        <el-form :inline="true" size="mini">
+          <el-form-item :label="item.title" :key="index" v-for="(item,index) in searchInitList">
+            <el-input :maxlength="item.maxlength" v-model="item.modelName" :placeholder="item.placeholder" v-if="item.searchStyle === 'input'"/>
+            <el-select v-model="item.modelName" :placeholder="item.placeholder"  v-if="item.searchStyle === 'select'">
+              <el-option
+                v-for="(item2,index) in item.options"
+                :key="index"
+                :label="item2.label"
+                :value="item2.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
+            <el-button @click="reset">重置</el-button>
+          </el-form-item>
+        </el-form>
       </div>
+      <div class="public_chose_people">
+        <el-row>
+          <el-col :span="17" class="visit_add_center">
+            <template>
+              <el-table
+                ref="table"
+                :data="tableList"
+                style="width: 100%"
+                class="tableset tabledialog"
+                row-key="id"
+                highlight-current-row
+                @row-click="handleRowClick"
+                @select="handleSelectionChange"
+                @select-all="handleSelectionChange">
+                <el-table-column
+                  type="selection"
+                  width="30"
+                  align="center">
+                </el-table-column>
+                <el-table-column
+                  v-for="(item,index) in tableInitProps"
+                  :key="index"
+                  :prop="item.name"
+                  :label="item.label"
+                  align="center">
+                </el-table-column>
+              </el-table>
+            </template>
+            <div class="page">
+              <el-pagination
+                layout="prev, pager, next"
+                background
+                @current-change="handleCurrentChange"
+                :current-page="query.pageNum"
+                :page-size="query.pageSize"
+                :total="total">
+              </el-pagination>
+            </div>
+          </el-col>
+          <el-col :span="7" class="visit_add_right">
+            <h1>已选择</h1>
+            <div class="right_span scrollbar">
+              <span v-for="(item, index) in selectList" :key="item.id" v-cloak :title="item.name.length>6 ? item.name:''">{{item.name.length>6? (item.name.substring(0,6)+'...'): item.name}}<a href="javascript:" :id="item.id" @click="deleteChose(index)"><i class="el-icon-close"></i></a></span>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+    </div>
     <span slot="footer" class="dialog-footer">
         <el-button @click="handleCancel">取消</el-button>
         <el-button type="primary" @click="sureChoose">确定</el-button>
@@ -85,115 +85,138 @@
   </el-dialog>
 </template>
 <script>
-export default {
-  name: 'choseMore',
-  props: {
-    // 弹窗标题
-    intiTitle: {
-      type: String,
-      default: ''
+  export default {
+    name: 'choseMore',
+    props: {
+      // 弹窗标题
+      intiTitle: {
+        type: String,
+        default: ''
+      },
+      // 弹窗
+      dialogVisible: {
+        type: Boolean,
+        default: false
+      },
+      // 搜索内容设置
+      searchInitList: Array,
+      // table 列表项
+      tableInitProps: Array,
+      // table 接口请求
+      tableInitUrl: '',
+      // 已选择
+      checkedList: {}
     },
-    // 弹窗
-    dialogVisible: {
-      type: Boolean,
-      default: false
+    event: 'change',
+    data() {
+      return {
+        tableList: [],
+        total: 0, // 总条数
+        selectList: [], // 选择的医院
+        selectStoreList: [], // 临时选择的医院
+        query: {
+          type: 2, // 此版本 固定参数
+          pageNum: 1,
+          pageSize: 8
+        }
+      }
     },
-    // 搜索内容设置
-    searchInitList: Array,
-    // table 列表项
-    tableInitProps: Array,
-    // table 接口请求
-    tableInitUrl: '',
-    // 已选择
-    checkedList: {}
-  },
-  event: 'change',
-  data () {
-    return {
-      tableList: [],
-      currentPage: 1, // 当前页码
-      total: 6, // 总条数
-      pageSize: 2, // 每页的数据条数
-      selectList: [], // 选择的医院
-      selectStoreList: [], // 临时选择的医院
-      query: {
-        pageNum: 1,
-        pageSize: 8
+    watch: {
+      selectList: function() {
+        this.checkList()
+      },
+      dialogVisible: function(val) {
+        if (val) {
+          this.reset()
+          this.selectList = this.checkedList
+        } else {
+          this.selectList = []
+        }
       }
-    }
-  },
-  watch: {
-    selectList: function (val, oldVal) {
-      this.checkList()
     },
-    dialogVisible: function (val) {
-      if (val) {
-        this.reset()
-        this.selectList = this.checkedList
-      } else {
-        this.selectList = []
-      }
-    }
-  },
-  mounted () {
-    this.loadPage()
-  },
-  methods: {
-    // 筛选
-    search () {
-      let _this = this
-      var params = {}
-      // 动态获取搜索条件值
-      for (var i = 0; i < _this.searchInitList.length; i++) {
-        params[_this.searchInitList[i].searchName] = _this.searchInitList[i].modelName
-      }
-      Object.assign(this.query, params)
-      console.log(this.query)
+    mounted() {
       this.loadPage()
     },
-    // 重置
-    reset () {
-      let _this = this
-      var params = {}
-      // 动态获取搜索条件值
-      for (var i = 0; i < _this.searchInitList.length; i++) {
-        params[_this.searchInitList[i].searchName] = '' // 接口字段置空
-        _this.searchInitList[i].modelName = '' // model置空
-      }
-      Object.assign(this.query, params)
-      console.log(this.query)
-      this.loadPage()
-    },
-    // 已选择医院删除
-    deleteChose (index) {
-      console.log(this.selectList, this.selectStoreList)
-      this.selectList.splice(index, 1)
-      console.log(this.selectList, this.selectStoreList)
-    },
-    // 加载列表
-    loadPage () {
-      let _this = this
-      _this.$axios.get(_this.tableInitUrl, _this.query)
-        .then((res) => {
-          _this.tableList = res.data.list
-        })
-    },
-    // 勾选分页选中状态
-    checkList () {
-      let _this = this
-      setTimeout(function () {
-        if (!_this.$refs.table) {
-          return false
+    methods: {
+      // 筛选
+      search() {
+        this.query.pageNum = 1
+        var params = {}
+        // 动态获取搜索条件值
+        for (var i = 0; i < this.searchInitList.length; i++) {
+          params[this.searchInitList[i].searchName] = this.searchInitList[i].modelName
         }
-        // 清除所有选中
-        _this.$refs.table.clearSelection()
-        // 勾选已选中
-        if (!_this.$refs.table.data) {
-          return false
+        Object.assign(this.query, params)
+        this.loadPage()
+      },
+      // 重置
+      reset() {
+        var params = {}
+        this.query.pageNum = 1
+        // 动态获取搜索条件值
+        for (var i = 0; i < this.searchInitList.length; i++) {
+          params[this.searchInitList[i].searchName] = '' // 接口字段置空
+          this.searchInitList[i].modelName = '' // model置空
         }
-        var checkedList = _this.$refs.table.data.filter(row => {
+        Object.assign(this.query, params)
+        this.loadPage()
+      },
+      // 已选择医院删除
+      deleteChose(index) {
+        this.selectList.splice(index, 1)
+      },
+      // 加载列表
+      loadPage() {
+        this.$axios.get(this.tableInitUrl, this.query)
+          .then((res) => {
+            this.tableList = res.data.list
+            this.total = res.data.total
+            // 保存勾选状态
+            this.checkList()
+          })
+      },
+      // 勾选分页选中状态
+      checkList() {
+        setTimeout(() => {
+          if (!this.$refs.table) {
+            return false
+          }
+          // 清除所有选中
+          this.$refs.table.clearSelection()
+          // 勾选已选中
+          if (!this.$refs.table.data) {
+            return false
+          }
+          var checkedList = this.$refs.table.data.filter(row => {
+            var flag = false
+            this.selectList.forEach(function (item) {
+              if (item.id === row.id) {
+                flag = true
+                return false
+              }
+            })
+            return flag
+          })
+          checkedList.forEach(row => {
+            this.$refs.table.toggleRowSelection(row, true)
+          })
+        }, 100)
+      },
+      // 医院分页处理
+      handleCurrentChange(pageNum) {
+        this.query.pageNum = pageNum
+        this.loadPage()
+      },
+      // 行点击
+      handleRowClick(row) {
+        this.$refs.table.toggleRowSelection(row)
+        this.handleSelectionChange(this.$refs.table.selection)
+      },
+      // 获取勾选的医院
+      handleSelectionChange(val) {
+        var currentCheckedList = this.$refs.table.data.filter(row => {
           var flag = false
-          _this.selectList.forEach(function (item) {
+          this.selectList.forEach((item) => {
             if (item.id === row.id) {
               flag = true
               return false
@@ -201,67 +224,38 @@ export default {
           })
           return flag
         })
-        checkedList.forEach(row => {
-          _this.$refs.table.toggleRowSelection(row, true)
-        })
-      }, 100)
-    },
-    // 医院分页处理
-    handleCurrentChange (pageNum) {
-      // console.log(`每页 ${pageNum} 条`)
-      this.currentPage = pageNum
-      // this.query.pageNum = pageNum
-      this.loadPage()
-    },
-    // 行点击
-    handleRowClick (row) {
-      this.$refs.table.toggleRowSelection(row)
-      this.handleSelectionChange(this.$refs.table.selection)
-    },
-    // 获取勾选的医院
-    handleSelectionChange (val) {
-      let _this = this
-      var currentCheckedList = _this.$refs.table.data.filter(row => {
-        var flag = false
-        _this.selectList.forEach(function (item) {
-          if (item.id === row.id) {
-            flag = true
-            return false
-          }
-        })
-        return flag
-      })
-      if (currentCheckedList.length > val.length) {
-        var unCheckedList = currentCheckedList.filter(v => !val.includes(v))
-        _this.selectList = _this.selectList.filter(row => {
-          var flag = false
-          unCheckedList.forEach(function (item) {
-            if (item.id === row.id) {
-              flag = true
-              return false
-            }
+        if (currentCheckedList.length > val.length) {
+          var unCheckedList = currentCheckedList.filter(v => !val.includes(v))
+          this.selectList = this.selectList.filter(row => {
+            var flag = false
+            unCheckedList.forEach((item) => {
+              if (item.id === row.id) {
+                flag = true
+                return false
+              }
+            })
+            return !flag
           })
-          return !flag
-        })
-      } else {
-        var addCheckedList = val.filter(v => !currentCheckedList.includes(v))
-        _this.selectList = _this.selectList.concat(addCheckedList)
+        } else {
+          var addCheckedList = val.filter(v => !currentCheckedList.includes(v))
+          this.selectList = this.selectList.concat(addCheckedList)
+        }
+      },
+      handleCancel() {
+        this.$emit('on-cancel')
+      },
+      sureChoose() {
+        // 清空
+        this.selectStoreList = []
+        this.selectStoreList = this.selectStoreList.concat(this.selectList)
+        if (this.selectStoreList.length <= 0) {
+          this.$message.error('请选择')
+          return
+        }
+        this.$emit('on-confirm', this.selectStoreList)
       }
-    },
-    handleCancel () {
-      this.$emit('on-cancel')
-    },
-    sureChoose () {
-      this.selectStoreList = this.selectStoreList.concat(this.selectList)
-      if (this.selectStoreList.length <= 0) {
-        this.$message.error('请选择')
-        return
-      }
-      console.log('最终是：', this.selectStoreList)
-      this.$emit('on-confirm', this.selectStoreList)
     }
   }
-}
 </script>
 <style lang="scss" scoped>
 
