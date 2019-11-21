@@ -118,14 +118,14 @@
                   title: '标题11',
                   maxlength: 10,
                   searchName: 'title1', // 查询条件名称 -- 接口字段名称
-                  modelName: '', // v-model的值
+                  modelName: '', // v-model的值(这个参数不用动，直接用)
                   placeholder: '请输入'
                 },
                 {
                   searchStyle: 'select', // 判断搜索类型为 select 下拉
                   title: '标题22',
                   searchName: 'title2', // 查询条件名称 -- 接口字段名称
-                  modelName: '', // v-model的值
+                  modelName: '', // v-model的值(这个参数不用动，直接用)
                   placeholder: '请选择',
                   options: [
                     {
@@ -197,14 +197,14 @@
                   title: '标题11',
                   maxlength: 10,
                   searchName: 'title1', // 查询条件名称 -- 接口字段名称
-                  modelName: '', // v-model的值
+                  modelName: '', // v-model的值(这个参数不用动，直接用)
                   placeholder: '请输入'
                 },
                 {
                   searchStyle: 'select', // 判断搜索类型为 select 下拉
                   title: '标题22',
                   searchName: 'title2', // 查询条件名称 -- 接口字段名称
-                  modelName: '', // v-model的值
+                  modelName: '', // v-model的值(这个参数不用动，直接用)
                   placeholder: '请选择',
                   options: [
                     {
@@ -543,14 +543,14 @@ export default {
           title: '标题11',
           maxlength: 10,
           searchName: 'title1', // 查询条件名称 -- 接口字段名称
-          modelName: '', // v-model的值
+          modelName: '', // v-model的值(这个参数不用动，直接用)
           placeholder: '请输入'
         },
         {
           searchStyle: 'select', // 判断搜索类型为 select 下拉
           title: '标题22',
           searchName: 'title2', // 查询条件名称 -- 接口字段名称
-          modelName: '', // v-model的值
+          modelName: '', // v-model的值(这个参数不用动，直接用)
           placeholder: '请选择',
           options: [
             {
