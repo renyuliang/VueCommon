@@ -40,6 +40,7 @@
             <el-table
               ref="table"
               :data="tableList"
+              v-loading="loading"
               style="width: 100%"
               class="tableset tabledialog"
               row-key="id"
@@ -50,13 +51,15 @@
                 :key="index"
                 :prop="item.name"
                 :label="item.label"
+                :formatter="item.formatFunction"
+                show-overflow-tooltip
                 align="center">
               </el-table-column>
             </el-table>
           </template>
           <div class="page">
             <el-pagination
-              layout="prev, pager, next"
+              layout="total, prev, pager, next"
               background
               @current-change="handleCurrentChange"
               :current-page="query.pageNum"
@@ -97,6 +100,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       tableList: [],
       total: 0, // 总条数
       query: {
@@ -135,10 +139,12 @@ export default {
     },
     // 加载table列表
     loadPage () {
+      this.loading = true
       this.$axios.get(this.tableInitUrl, this.query)
         .then((res) => {
           this.tableList = res.data.list
           this.total = res.data.total
+          this.loading = false
         })
     },
     // 医院分页处理

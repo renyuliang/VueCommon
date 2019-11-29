@@ -134,7 +134,10 @@
                     },
                     {
                       label: '李四',
-                      value: '李四'
+                      value: '李四',
+                      formatFunction:function () {
+                        return ''
+                      }
                     }
                   ]
                 }
@@ -226,7 +229,10 @@
                 },
                 {
                   name: 'mobile',
-                  label: '电话'
+                  label: '电话',
+                  formatFunction:function () {
+                    return ''
+                  }
                 }
               ]
 
@@ -365,28 +371,40 @@
       </el-collapse>
       <hr>
       <h2 id="searchimg">图片全屏查看</h2>
-      <img src="../../assets/images/qq.jpg" alt="" style="width: 60px;height:60px;" @click="clickImg($event)">
-      <big-img :imgSrc="imgSrc" v-if="showImg" @clickit="showImg = false"></big-img>
+      <!--<img src="../../assets/images/qq.jpg" alt="" style="width: 60px;height:60px;" @click="clickImg($event)">-->
+      <!--<big-img :imgSrc="imgSrc" v-if="showImg" @clickit="showImg = false"></big-img>-->
+
+      <div>
+        <span style="margin-right: 50px" v-for="(item,index) in imgList">
+          <img :src="item.url" alt="" style="width: 60px;height:60px;" @click="clickImg(index)">
+        </span>
+      </div>
+      <big-img :imgSrcList="imgSrcList" :imgSrcListIndex="imgSrcListIndex" :showImgDialog="showImg" @closeDialog="showImg = false"></big-img>
       <el-collapse>
         <el-collapse-item title="查看代码">
             <pre>
               // 点击事件，放在图片上
-              < src="../../assets/images/qq.jpg" alt="" style="width: 60px;height:60px;" @click="clickImg($event)">
+              //<span style="margin-right: 50px" v-for="(item,index) in imgList">
+               // < :src="item.url" alt="" style="width: 60px;height:60px;" @click="clickImg(index)">
+              //</span>
 
               // 调用方式：（组件名：big-img）
               <
-              :imgSrc="imgSrc" // 变量
-              v-if="showImg"
-              @clickit="showImg = false"
+              :imgSrcList="imgSrcList" // 图片对象
+              :imgSrcListIndex="imgSrcListIndex" // 传入点击图片的index
+              :showImgDialog="showImg"
+              @closeDialog="showImg = false"
               ></>
           // 变量
-          imgSrc: '',
-          showImg: false
+          showImg: false,
+          imgSrcList: {},
+          imgSrcListIndex: '',
 
           // 方法
           clickImg (e) {
-          this.showImg = true
-          this.imgSrc = e.currentTarget.src
+            this.showImg = true
+            this.imgSrcList = this.imgList
+            this.imgSrcListIndex = index
           }
           </pre>
         </el-collapse-item>
@@ -585,7 +603,22 @@ export default {
       areaName: '',
       // 图片全屏查看
       showImg: false,
-      imgSrc: '',
+      imgSrcList: {},
+      imgSrcListIndex: '',
+      imgList: [
+        {
+          url: '../../../static/image/back1.jpg'
+        },
+        {
+          url: '../../../static/image/back2.jpg'
+        },
+        {
+          url: '../../../static/image/back3.jpg'
+        },
+        {
+          url: '../../../static/image/back4.jpg'
+        }
+      ],
       // 保存搜索条件
       tableData22: [],
       currentPage: 1, // 当前页码
@@ -641,9 +674,10 @@ export default {
     getAreaName (val) {
       this.areaName = val
     },
-    clickImg (e) {
+    clickImg (index) {
       this.showImg = true
-      this.imgSrc = e.currentTarget.src
+      this.imgSrcList = this.imgList
+      this.imgSrcListIndex = index
     },
     // 分页公用 -- 列表方法名必须是getListData
     getListData () {

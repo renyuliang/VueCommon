@@ -37,6 +37,7 @@
               <el-table
                 ref="table"
                 :data="tableList"
+                v-loading="loading"
                 style="width: 100%"
                 class="tableset tabledialog"
                 row-key="id"
@@ -54,13 +55,15 @@
                   :key="index"
                   :prop="item.name"
                   :label="item.label"
+                  :formatter="item.formatFunction"
+                  show-overflow-tooltip
                   align="center">
                 </el-table-column>
               </el-table>
             </template>
             <div class="page">
               <el-pagination
-                layout="prev, pager, next"
+                layout="total, prev, pager, next"
                 background
                 @current-change="handleCurrentChange"
                 :current-page="query.pageNum"
@@ -110,6 +113,7 @@
     event: 'change',
     data() {
       return {
+        loading: false,
         tableList: [],
         total: 0, // 总条数
         selectList: [], // 选择的医院
@@ -167,10 +171,12 @@
       },
       // 加载列表
       loadPage() {
+        this.loading = true
         this.$axios.get(this.tableInitUrl, this.query)
           .then((res) => {
             this.tableList = res.data.list
             this.total = res.data.total
+            this.loading = false
             // 保存勾选状态
             this.checkList()
           })
