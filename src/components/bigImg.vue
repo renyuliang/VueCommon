@@ -1,21 +1,28 @@
-<!--<img src="../../assets/images/qq.jpg" alt="" style="width: 60px;height:60px;" @click="clickImg($event)">-->
-<!--clickImg (e) {-->
-  <!--this.showImg = true-->
-  <!--this.imgSrc = e.currentTarget.src-->
-<!--}-->
+<!--// 点击事件，放在图片上-->
+<!--//<span style="margin-right: 50px" v-for="(item,index) in imgList">-->
+               <!--// < :src="item.url" alt="" style="width: 60px;height:60px;" @click="clickImg(index)">-->
+              <!--//</span>-->
 
-<!--imgSrc &#45;&#45; 地址-->
-<!--showImg &#45;&#45; 控制弹窗显示-->
-<!--<big-img :imgSrc="imgSrc" v-if="showImg" @clickit="showImg = false"></big-img>-->
+<!--// 调用方式：（组件名：big-img）-->
+<!--<-->
+<!--:imgSrcList="imgSrcList" // 图片对象-->
+<!--:imgSrcListIndex="imgSrcListIndex" // 传入点击图片的index-->
+<!--:showImgDialog="showImg"-->
+<!--@closeDialog="showImg = false"-->
+<!--&gt;</>-->
+<!--// 变量-->
+<!--showImg: false,-->
+<!--imgSrcList: {},-->
+<!--imgSrcListIndex: '',-->
+
+<!--// 方法-->
+<!--clickImg (e) {-->
+<!--this.showImg = true-->
+<!--this.imgSrcList = this.imgList-->
+<!--this.imgSrcListIndex = index-->
+<!--}-->
 <template>
-  <!--<div class="img-view" @click="bigImg">-->
-    <!--<img src="../../static/image/prev.png" class="imgbtn prev" @click="prev(url)"><img src="" alt="">-->
-    <!--<img src="../../static/image/next.png" class="imgbtn next" @click="next(url)"><img src="" alt="">-->
-    <!--<div class="scrollbar">-->
-      <!--<img :src="imgSrc" class="showImg">-->
-    <!--</div>-->
-  <!--</div>-->
-  <div class="initChangeImg" v-if="showImgDialog" @click="hideDialog">
+<div class="initChangeImg" v-if="showImgDialog" @click="hideDialog">
     <div class="imgPre" :style="objStyle">
       <div class="imgInner" :class="{'scrollbar':showScroll}">
         <img :src="imgSrc" alt="" class="showImg">
