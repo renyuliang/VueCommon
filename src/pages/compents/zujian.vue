@@ -89,7 +89,7 @@
         :dialog-visible="dialogChoseMore"
         :searchInitList="searchInitList"
         :tableInitProps="tableInitProps"
-        :tableInitUrl="'../../static/queryPage.json'"
+        :tableInitUrl="'../../../static/queryPage.json'"
         @on-cancel="dialogChoseMore = false"
         @on-confirm="confirmHospitalList"
         :checkedList="hospitalList"/>
@@ -113,6 +113,15 @@
               hospitalList: [],
               // 自定义搜索条件
               searchInitList: [
+                {
+                  // searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
+                  searchType: 'Number', // 判断只能输入正数字
+                  title: '输入数字1',
+                  maxlength: 10,
+                  searchName: 'titleNumber1', // 查询条件名称 -- 接口字段名称
+                  modelName: '', // v-model的值(这个参数不用动，直接用)
+                  placeholder: '只能输入数字'
+                },
                 {
                   searchStyle: 'input', // 判断搜索类型为 input
                   title: '标题11',
@@ -174,7 +183,7 @@
         :dialog-visible="dialogChoseOne"
         :searchInitList="searchInitList"
         :tableInitProps="tableInitProps"
-        :tableInitUrl="'../../static/queryPage.json'"
+        :tableInitUrl="'/static/queryPage.json'"
         @on-cancel="dialogChoseOne = false"
         @on-confirm="confirmName"/>
       <el-collapse>
@@ -196,7 +205,16 @@
               // 自定义搜索条件
               searchInitList: [
                 {
-                  searchStyle: 'input', // 判断搜索类型为 input
+                  // searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
+                  searchType: 'Number', // 判断只能输入正数字
+                  title: '输入数字1',
+                  maxlength: 10,
+                  searchName: 'titleNumber1', // 查询条件名称 -- 接口字段名称
+                  modelName: '', // v-model的值(这个参数不用动，直接用)
+                  placeholder: '只能输入数字'
+                },
+                {
+                  searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
                   title: '标题11',
                   maxlength: 10,
                   searchName: 'title1', // 查询条件名称 -- 接口字段名称
@@ -247,7 +265,7 @@
       <hr>
       <h2 id="autoinput">输入框模糊匹配</h2>
       <!--<auto-input :dataUrl="'../../static/input.json'" v-model.trim="inputName" @listenVal="listenVlaue" ></auto-input>-->
-      <auto-input :dataUrl="'../../static/input.json'" :paramKeys="['memberName']" :showKeys="['memberName']" @listenVal="listenVlaue"></auto-input>
+      <auto-input :dataUrl="'../../../static/input.json'" :paramKeys="['memberName']" :showKeys="['memberName']" @listenVal="listenVlaue"></auto-input>
       <div class="question">
         {{inputName}}
       </div>
@@ -402,9 +420,9 @@
 
           // 方法
           clickImg (e) {
-            this.showImg = true
-            this.imgSrcList = this.imgList
-            this.imgSrcListIndex = index
+          this.showImg = true
+          this.imgSrcList = this.imgList
+          this.imgSrcListIndex = index
           }
           </pre>
         </el-collapse-item>
@@ -506,191 +524,217 @@
 </template>
 
 <script>
-import crabNumber from '../../components/crab-number'
-import autoInput from '../../components/autoInput'
-import choseArea from '../../components/choseArea'
-import choseMore from '../../components/choseMore'
-import choseOne from '../../components/choseOne'
-import choseMan from '../../components/choseMan'
-import uploadImg from '../../components/uploadImg'
-import uploadExcel from '../../components/uploadExcel'
-import bigImg from '../../components/bigImg'
-// 分页公用 必须引入
-import initPageJs from '../../mixin/init-page'
-export default {
-  name: 'index',
-  components: { choseMan, choseOne, choseMore, autoInput, uploadImg, uploadExcel, choseArea, bigImg, crabNumber },
-  mixins: [initPageJs],
-  data () {
-    return {
-      // 选择医院
-      dialogChoseMore: false,
-      dialogChoseOne: false,
-      dialogUpload: false,
-      dialogChoseMan: false,
-      roleUser: {
-        unChooseUserIdList: [28],
-        userList: [
-          {
-            'authId': null,
-            'createTime': null,
-            'creatorId': null,
-            'departmentName': '成都一蟹科技有限公司',
-            'email': 'wj020103@126.com',
-            'headImg': 'http://file.medcrab.com/media/5befd91ddae4550b4cb8656f',
-            'id': 2,
-            'lastmodifyId': null,
-            'lastmodifyTime': null,
-            'mobile': '18080168320',
-            'name': '王军',
-            'nickName': null,
-            'orgId': null,
-            'remarks': null,
-            'sex': 1
-          }
-        ]
-      },
-      manList: [], // 选择成员
-      hospitalList: [], // 确定后保存的数据
-      // 单选
-      getName: '',
-      // 自定义搜索条件
-      searchInitList: [
-        {
-          searchStyle: 'input', // 判断搜索类型为 input
-          title: '标题11',
-          maxlength: 10,
-          searchName: 'title1', // 查询条件名称 -- 接口字段名称
-          modelName: '', // v-model的值(这个参数不用动，直接用)
-          placeholder: '请输入'
-        },
-        {
-          searchStyle: 'select', // 判断搜索类型为 select 下拉
-          title: '标题22',
-          searchName: 'title2', // 查询条件名称 -- 接口字段名称
-          modelName: '', // v-model的值(这个参数不用动，直接用)
-          placeholder: '请选择',
-          options: [
+  import crabNumber from '../../components/crab-number'
+  import autoInput from '../../components/autoInput'
+  import choseArea from '../../components/choseArea'
+  import choseMore from '../../components/choseMore'
+  import choseOne from '../../components/choseOne'
+  import choseMan from '../../components/choseMan'
+  import uploadImg from '../../components/uploadImg'
+  import uploadExcel from '../../components/uploadExcel'
+  import bigImg from '../../components/bigImg'
+  // 分页公用 必须引入
+  import initPageJs from '../../mixin/init-page'
+  export default {
+    name: 'index',
+    components: { choseMan, choseOne, choseMore, autoInput, uploadImg, uploadExcel, choseArea, bigImg, crabNumber },
+    mixins: [initPageJs],
+    data () {
+      return {
+        // 选择医院
+        dialogChoseMore: false,
+        dialogChoseOne: false,
+        dialogUpload: false,
+        dialogChoseMan: false,
+        roleUser: {
+          unChooseUserIdList: [28],
+          userList: [
             {
-              label: '张三',
-              value: '张三'
-            },
-            {
-              label: '李四',
-              value: '李四'
+              'authId': null,
+              'createTime': null,
+              'creatorId': null,
+              'departmentName': '成都一蟹科技有限公司',
+              'email': 'wj020103@126.com',
+              'headImg': 'http://file.medcrab.com/media/5befd91ddae4550b4cb8656f',
+              'id': 2,
+              'lastmodifyId': null,
+              'lastmodifyTime': null,
+              'mobile': '18080168320',
+              'name': '王军',
+              'nickName': null,
+              'orgId': null,
+              'remarks': null,
+              'sex': 1
             }
           ]
+        },
+        manList: [], // 选择成员
+        hospitalList: [], // 确定后保存的数据
+        // 单选
+        getName: '',
+        // 自定义搜索条件
+        searchInitList: [
+          {
+            // searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
+            searchType: 'Number', // 判断只能输入正数字
+            title: '输入数字1',
+            maxlength: 10,
+            searchName: 'titleNumber1', // 查询条件名称 -- 接口字段名称
+            modelName: '', // v-model的值(这个参数不用动，直接用)
+            placeholder: '只能输入数字'
+          },
+          {
+            // searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
+            searchType: 'Number', // 判断只能输入正数字
+            title: '输入数字2',
+            maxlength: 10,
+            searchName: 'titleNumber2', // 查询条件名称 -- 接口字段名称
+            modelName: '', // v-model的值(这个参数不用动，直接用)
+            placeholder: '只能输入数字'
+          },
+          {
+            // searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
+            title: '标题11',
+            maxlength: 10,
+            searchName: 'titleInput1', // 查询条件名称 -- 接口字段名称
+            modelName: '', // v-model的值(这个参数不用动，直接用)
+            placeholder: '请输入'
+          },
+          {
+            // searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
+            title: '标题22',
+            maxlength: 10,
+            searchName: 'titleInput2', // 查询条件名称 -- 接口字段名称
+            modelName: '', // v-model的值(这个参数不用动，直接用)
+            placeholder: '请输入'
+          },
+          {
+            searchStyle: 'select', // 判断搜索类型为 select 下拉
+            title: '标题33',
+            searchName: 'titleSelect', // 查询条件名称 -- 接口字段名称
+            modelName: '', // v-model的值(这个参数不用动，直接用)
+            placeholder: '请选择',
+            options: [
+              {
+                label: '张三',
+                value: '张三'
+              },
+              {
+                label: '李四',
+                value: '李四'
+              }
+            ]
+          }
+        ],
+        // 单选 table 设置项
+        tableInitProps: [
+          {
+            name: 'name',
+            label: '姓名'
+          },
+          {
+            name: 'mobile',
+            label: '电话'
+          }
+        ],
+        // 动态输入模糊匹配
+        inputName: '',
+        // 上次成功后的图片
+        uploadImgUrl: [],
+        // 上传成功后的文件
+        uploadName: '',
+        // 选择地区
+        areaName: '',
+        // 图片全屏查看
+        showImg: false,
+        imgSrcList: {},
+        imgSrcListIndex: '',
+        imgList: [
+          {
+            url: '../../../static/image/back1.jpg'
+          },
+          {
+            url: '../../../static/image/back2.jpg'
+          },
+          {
+            url: '../../../static/image/back3.jpg'
+          },
+          {
+            url: '../../../static/image/back4.jpg'
+          }
+        ],
+        // 保存搜索条件
+        tableData22: [],
+        currentPage: 1, // 当前页码
+        pageSize: 1, // 每页的数据条数
+        searchBuffer22: {
+          name: '',
+          phone: '',
+          currentPage: 1,
+          pageSize: 1
+        },
+        // 公用分页,保存查询条件-- 查询参数名必须 searchData
+        searchData: {
+          product: '',
+          hospital: '',
+          userName: ''
         }
-      ],
-      // 单选 table 设置项
-      tableInitProps: [
-        {
-          name: 'name',
-          label: '姓名'
-        },
-        {
-          name: 'mobile',
-          label: '电话'
-        }
-      ],
-      // 动态输入模糊匹配
-      inputName: '',
-      // 上次成功后的图片
-      uploadImgUrl: [],
-      // 上传成功后的文件
-      uploadName: '',
-      // 选择地区
-      areaName: '',
-      // 图片全屏查看
-      showImg: false,
-      imgSrcList: {},
-      imgSrcListIndex: '',
-      imgList: [
-        {
-          url: '../../../static/image/back1.jpg'
-        },
-        {
-          url: '../../../static/image/back2.jpg'
-        },
-        {
-          url: '../../../static/image/back3.jpg'
-        },
-        {
-          url: '../../../static/image/back4.jpg'
-        }
-      ],
-      // 保存搜索条件
-      tableData22: [],
-      currentPage: 1, // 当前页码
-      pageSize: 1, // 每页的数据条数
-      searchBuffer22: {
-        name: '',
-        phone: '',
-        currentPage: 1,
-        pageSize: 1
+      }
+    },
+    methods: {
+      // 选择人员
+      getSaveList (val) {
+        this.dialogChoseMan = false
+        this.manList = val
+        console.log(val)
       },
-      // 公用分页,保存查询条件-- 查询参数名必须 searchData
-      searchData: {
-        product: '',
-        hospital: '',
-        userName: ''
+      // 确定 -- 多选
+      confirmHospitalList (val) {
+        this.dialogChoseMore = false
+        this.hospitalList = val
+        console.log(this.hospitalList)
+      },
+      // 确定 -- 单选
+      confirmName (val) {
+        this.dialogChoseOne = false
+        this.getName = val.name
+      },
+      // 输入框模糊匹配
+      listenVlaue (val) {
+        this.inputName = val.value
+      },
+      // 图片上传成功后的操作
+      handSuccessImg (val) {
+        this.uploadImgUrl = []
+        val.forEach(item => {
+          this.uploadImgUrl.push(item.name)
+        })
+      },
+      // 上传成功后的操作
+      handSuccessExcel (val) {
+        this.uploadName = val[0].name
+      },
+      // 获取地区
+      getAreaName (val) {
+        this.areaName = val
+      },
+      clickImg (index) {
+        this.showImg = true
+        this.imgSrcList = this.imgList
+        this.imgSrcListIndex = index
+      },
+      // 分页公用 -- 列表方法名必须是getListData
+      getListData () {
+        let _this = this
+        _this.searchBuffer.pageNum = _this.pageNum
+        _this.searchBuffer.pageSize = _this.pageSize
+        _this.$axios.get('../../../static/queryPage.json', _this.searchBuffer).then((res) => {
+          _this.tableData = res.data.list
+          _this.total = res.data.total
+        })
       }
     }
-  },
-  methods: {
-    // 选择人员
-    getSaveList (val) {
-      this.dialogChoseMan = false
-      this.manList = val
-      console.log(val)
-    },
-    // 确定 -- 多选
-    confirmHospitalList (val) {
-      this.dialogChoseMore = false
-      this.hospitalList = val
-      console.log(this.hospitalList)
-    },
-    // 确定 -- 单选
-    confirmName (val) {
-      this.dialogChoseOne = false
-      this.getName = val.name
-    },
-    // 输入框模糊匹配
-    listenVlaue (val) {
-      this.inputName = val.value
-    },
-    // 图片上传成功后的操作
-    handSuccessImg (val) {
-      this.uploadImgUrl = []
-      val.forEach(item => {
-        this.uploadImgUrl.push(item.name)
-      })
-    },
-    // 上传成功后的操作
-    handSuccessExcel (val) {
-      this.uploadName = val[0].name
-    },
-    // 获取地区
-    getAreaName (val) {
-      this.areaName = val
-    },
-    clickImg (index) {
-      this.showImg = true
-      this.imgSrcList = this.imgList
-      this.imgSrcListIndex = index
-    },
-    // 分页公用 -- 列表方法名必须是getListData
-    getListData () {
-      let _this = this
-      _this.searchBuffer.pageNum = _this.pageNum
-      _this.searchBuffer.pageSize = _this.pageSize
-      _this.$axios.get('../../static/queryPage.json', _this.searchBuffer).then((res) => {
-        _this.tableData = res.data.list
-        _this.total = res.data.total
-      })
-    }
   }
-}
 </script>
 <style lang="scss">
   .a_span{

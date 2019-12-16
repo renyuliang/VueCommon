@@ -14,15 +14,32 @@
       <div class="pub-search">
         <el-form :inline="true" size="mini">
           <el-form-item :label="item.title" :key="index" v-for="(item,index) in searchInitList">
-            <el-input :maxlength="item.maxlength" v-model="item.modelName" :placeholder="item.placeholder" v-if="item.searchStyle === 'input'"/>
-            <el-select v-model="item.modelName" :placeholder="item.placeholder"  v-if="item.searchStyle === 'select'">
-              <el-option
-                v-for="(item2,index) in item.options"
-                :key="index"
-                :label="item2.label"
-                :value="item2.value">
-              </el-option>
-            </el-select>
+            <template v-if="item.searchStyle === 'select'">
+              <el-select v-model="item.modelName" :placeholder="item.placeholder">
+                <el-option
+                  v-for="(item2,index) in item.options"
+                  :key="index"
+                  :label="item2.label"
+                  :value="item2.value">
+                </el-option>
+              </el-select>
+            </template>
+            <template v-else>
+              <el-input
+                :maxlength="item.maxlength"
+                v-model="item.modelName"
+                :placeholder="item.placeholder"
+                v-if="item.searchType === 'Number'"
+                onkeyup='this.value=(this.value.replace(/[^\d]/g,"")).replace(/\b(0+)/gi,"")'
+                @blur="changeInput(item.modelName,item.searchName)"/>
+              <el-input
+                :maxlength="item.maxlength"
+                v-model="item.modelName"
+                :placeholder="item.placeholder"
+                onkeyup="value=value.replace(/\s*/g,'')"
+                @blur="blurInput(item.modelName,item.searchName)"
+                v-else/>
+            </template>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
@@ -55,6 +72,7 @@
                   :key="index"
                   :prop="item.name"
                   :label="item.label"
+                  :width="item.width"
                   :formatter="item.formatFunction"
                   show-overflow-tooltip
                   align="center">
@@ -142,6 +160,35 @@
       this.loadPage()
     },
     methods: {
+      changeInput(val,valOption) {
+        for (var i = 0; i < this.searchInitList.length; i++) {
+          if (this.searchInitList[i].searchType === 'Number') {
+            if (this.searchInitList[i].searchName === valOption) {
+              let value = parseInt(val)
+              if (value) {
+                this.searchInitList[i].modelName = value
+              } else {
+                this.searchInitList[i].modelName = ''
+              }
+            }
+          }
+        }
+      },
+      blurInput(val,valOption){
+        for (var i = 0; i < this.searchInitList.length; i++) {
+          if (this.searchInitList[i].searchStyle !== 'select') {
+            if (this.searchInitList[i].searchType !== 'Number') {
+              if (this.searchInitList[i].searchName === valOption) {
+                if (val) {
+                  this.searchInitList[i].modelName = val.replace(/\s*/g,'')
+                } else {
+                  this.searchInitList[i].modelName = ''
+                }
+              }
+            }
+          }
+        }
+      },
       // 筛选
       search() {
         this.query.pageNum = 1
@@ -151,6 +198,7 @@
           params[this.searchInitList[i].searchName] = this.searchInitList[i].modelName
         }
         Object.assign(this.query, params)
+        console.log(this.query)
         this.loadPage()
       },
       // 重置
@@ -289,5 +337,11 @@
 
   .pub-search .el-input{
     width: 160px;
+  }
+  .el-form--inline .el-form-item{
+    margin-right: 5px;
+    &:last-child{
+      margin-right: 0;
+    }
   }
 </style>

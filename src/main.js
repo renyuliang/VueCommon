@@ -14,7 +14,8 @@ import { floatObj } from './mixin/floatObj'
 import { isNull } from './mixin/regular'
 Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
 Vue.use(VueQuillEditor)
-Vue.use(axios)
+// Vue.use(axios)
+// Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
