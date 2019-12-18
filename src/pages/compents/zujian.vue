@@ -482,15 +482,26 @@
                 查询按钮的方法名称是：search()
                 重置按钮的方法名称是：resetSearch()
 
+                注：也可自定义方法名称，然后在调用方法如：
+                // 筛选
+                initSearch(){
+                  this.search()
+                }
+                // 重置
+                initResetSearch(){
+                  this.resetSearch()
+                }
+
                 引入 element-ui 自带的分页组件，替换参数
-                :current-page="pageNum"   // 当前页
-                :page-size="pageSize"     // 每页显示条数
+                :current-page="searchBuffer.pageNum"   // 当前页
+                :page-size="searchBuffer.pageSize"     // 每页显示条数
                 :total="total"            // 总条数
                 v-if="total>0"            // 添加判断条件
 
               js：
                 1. // 分页公用 必须引入  vue混入
                   import initPageJs from '../../mixin/init-page'
+                  mixins: [initPageJs],
                 2. 搜索条件结构如：
                 searchData: {   // 名称必须是 searchData
                   product: '',
@@ -502,9 +513,6 @@
                 getListData () {  // 方法名称必须是 getListData （）
                   // 回显
                   vm.searchData = Object.assign({}, vm.searchBuffer)
-                  // 页数
-                  vm.searchBuffer.pageNum = vm.pageNum
-                  vm.searchBuffer.pageSize = vm.pageSize
                   vm.$axios.get('/appProductPopularizeBaseinfo/getBaseInfoList', vm.searchBuffer).then(res => {
                     vm.tableData = res.data.list  // tableData 为 返回数据
                     // 获取总条数
