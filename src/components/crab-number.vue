@@ -115,8 +115,8 @@
         _this.$emit('input', inputValue)
         _this.$nextTick(() => {
           //避免重复赋值，如果是全数字输入，监听器会赋值，如果非数字输入，监听器不会改变，无法达到替换效果
-          if (_this.value !== _this.showVal) {
-            _this.showVal = _this.value
+          if (inputValue !== _this.showVal) {
+            _this.showVal = inputValue
           }
         })
       }

@@ -507,12 +507,16 @@
                   product: '',
                   hospital: '',
                   userName: ''
-                }
+                },
+              // 判断是否从子页面返回
+                storageBollean: this.$route.query.storage
                 3. 方法：如
                 // 如果有头部统计数据，则调用 getHeadData() 方法
                 getListData () {  // 方法名称必须是 getListData （）
-                  // 回显
-                  vm.searchData = Object.assign({}, vm.searchBuffer)
+                  if (this.storageBollean) {
+                    // 回显
+                    vm.searchData = Object.assign({}, vm.searchBuffer)
+                  }
                   vm.$axios.get('/appProductPopularizeBaseinfo/getBaseInfoList', vm.searchBuffer).then(res => {
                     vm.tableData = res.data.list  // tableData 为 返回数据
                     // 获取总条数
@@ -524,6 +528,12 @@
                   this.storeSearch() //保存搜索条件
                   ... 操作
                 }
+
+
+              // 子页面返回
+              goBack() {
+                this.$router.push({ path: '/job-management/post-management', query: { storage: true }})
+              }
             </code></pre>
         </el-collapse-item>
       </el-collapse>
