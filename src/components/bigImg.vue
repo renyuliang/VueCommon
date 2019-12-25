@@ -1,25 +1,15 @@
-<!--// 点击事件，放在图片上-->
-<!--//<span style="margin-right: 50px" v-for="(item,index) in imgList">-->
-               <!--// < :src="item.url" alt="" style="width: 60px;height:60px;" @click="clickImg(index)">-->
-              <!--//</span>-->
+<!--<div>-->
+        <!--<span style="margin-right: 50px" v-for="(item,index) in imgList">-->
+          <!--<img :src="item.url" alt="" style="width: 60px;height:60px;" @click="clickImg(index)">-->
+        <!--</span>-->
+<!--</div>-->
 
-<!--// 调用方式：（组件名：big-img）-->
-<!--<-->
-<!--:imgSrcList="imgSrcList" // 图片对象-->
-<!--:imgSrcListIndex="imgSrcListIndex" // 传入点击图片的index-->
-<!--:showImgDialog="showImg"-->
-<!--@closeDialog="showImg = false"-->
-<!--&gt;</>-->
-<!--// 变量-->
-<!--showImg: false,-->
-<!--imgSrcList: {},-->
-<!--imgSrcListIndex: '',-->
+<!--<big-img :imgSrcList="imgSrcList" :imgSrcListIndex="imgSrcListIndex" :showImgDialog="showImg" @closeDialog="showImg = false"></big-img>-->
 
-<!--// 方法-->
-<!--clickImg (e) {-->
-<!--this.showImg = true-->
-<!--this.imgSrcList = this.imgList-->
-<!--this.imgSrcListIndex = index-->
+<!--clickImg (index) {-->
+  <!--this.showImg = true-->
+  <!--this.imgSrcList = this.imgList-->
+  <!--this.imgSrcListIndex = index-->
 <!--}-->
 <template>
 <div class="initChangeImg" v-if="showImgDialog" @click="hideDialog">
@@ -27,8 +17,8 @@
       <div class="imgInner" :class="{'scrollbar':showScroll}">
         <img :src="imgSrc" alt="" class="showImg">
       </div>
-      <img src="../../static/image/prev.png" class="imgbtn prev" @click="prev(imgSrc)" v-if="isShowBtn"><img src="" alt="">
-      <img src="../../static/image/next.png" class="imgbtn next" @click="next(imgSrc)" v-if="isShowBtn"><img src="" alt="">
+      <img src="../../static/image/prev.png" class="imgbtn prev" @click="prev(imgSrc)" v-if="isShowBtnPrev"><img src="" alt="">
+      <img src="../../static/image/next.png" class="imgbtn next" @click="next(imgSrc)" v-if="isShowBtnNext"><img src="" alt="">
     </div>
   </div>
 </template>
@@ -36,7 +26,6 @@
 <script>
 export default {
   name: 'bigImg',
-  // props: ['imgSrc'],
   props: {
     imgSrcList: {}, // 接收传入的图片对象
     imgSrcListIndex: 0, // 接收传入img对象的index
@@ -48,7 +37,9 @@ export default {
   data() {
     return {
       showScroll: false,
-      isShowBtn: true,
+      isShowBtnPrev: true,
+      isShowBtnNext: true,
+      changeIndex: 0, // 判断当前图片的index
       objStyle: {
         width: (window.innerWidth/1.5)+'px',
         height: (window.innerHeight/1.1)+'px'
@@ -61,14 +52,13 @@ export default {
       // 默认显示
       if (this.showImgDialog == true) {
         this.imgSrc = this.imgSrcList[this.imgSrcListIndex].url
+        this.changeIndex = this.imgSrcListIndex
         this.setScroll()
       }
-      // 判断是否出现 上 下 切换的图片
-      if (this.imgSrcList.length >= 2) {
-        this.isShowBtn = true
-      } else {
-        this.isShowBtn = false
-      }
+      // 判断是否是第一个
+      this.isShowBtnPrev = this.changeIndex == 0 ? false : true
+      // 判断是否是最后一个
+      this.isShowBtnNext = this.changeIndex >= (this.imgSrcList.length - 1) ? false : true
     }
   },
   methods: {
@@ -86,9 +76,12 @@ export default {
     next(url) {
       this.imgSrcList.forEach((item, index) => {
         if (url === item.url) {
-          var addIndex = index + 1
-          if (addIndex !== this.imgSrcList.length) {
-            this.imgSrc = this.imgSrcList[addIndex].url
+          this.changeIndex = index + 1
+          // 判断是否是最后一张
+          this.isShowBtnNext = this.changeIndex >= (this.imgSrcList.length - 1) ? false : true
+          this.isShowBtnPrev = true
+          if (this.changeIndex !== this.imgSrcList.length) {
+            this.imgSrc = this.imgSrcList[this.changeIndex].url
             this.setScroll()
           }
         }
@@ -98,9 +91,12 @@ export default {
     prev(url) {
       this.imgSrcList.forEach((item, index) => {
         if (url === item.url) {
-          var reIndex = index - 1
-          if (reIndex >= 0) {
-            this.imgSrc = this.imgSrcList[reIndex].url
+          this.changeIndex = index - 1
+          // 判断是否是第一张
+          this.isShowBtnPrev = this.changeIndex == 0 ? false : true
+          this.isShowBtnNext = true
+          if (this.changeIndex >= 0) {
+            this.imgSrc = this.imgSrcList[this.changeIndex].url
             this.setScroll()
           }
         }
@@ -111,7 +107,13 @@ export default {
       setTimeout(()=>{
         let imgHeiht = document.getElementsByClassName('showImg')[0].clientHeight
         // 图片高度大于屏幕高度
-        imgHeiht > (window.innerHeight/1.1) ? this.showScroll = true : this.showScroll = false
+        if (imgHeiht > (window.innerHeight/1.1)) {
+          this.showScroll = true
+          this.objStyle.height = (window.innerHeight/1.1)+"px"
+        } else {
+          this.showScroll = false
+          this.objStyle.height = imgHeiht+"px"
+        }
       },1)
     }
   }
@@ -119,22 +121,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  /*.img-view {*/
-    /*position: fixed;*/
-    /*left: 0;*/
-    /*right: 0;*/
-    /*top: 0;*/
-    /*bottom: 0;*/
-    /*background: rgba(0,0,0,.1);*/
-    /*z-index: 999;*/
-    /*display: flex;*/
-    /*align-content: center;*/
-    /*img{*/
-      /*margin: auto;*/
-      /*max-width: 90%;*/
-      /*max-height: 90%;*/
-    /*}*/
-  /*}*/
   .initChangeImg{
     position: fixed;
     left: 0;

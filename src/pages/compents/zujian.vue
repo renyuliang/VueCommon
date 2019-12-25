@@ -389,9 +389,6 @@
       </el-collapse>
       <hr>
       <h2 id="searchimg">图片全屏查看</h2>
-      <!--<img src="../../assets/images/qq.jpg" alt="" style="width: 60px;height:60px;" @click="clickImg($event)">-->
-      <!--<big-img :imgSrc="imgSrc" v-if="showImg" @clickit="showImg = false"></big-img>-->
-
       <div>
         <span style="margin-right: 50px" v-for="(item,index) in imgList">
           <img :src="item.url" alt="" style="width: 60px;height:60px;" @click="clickImg(index)">
@@ -463,9 +460,9 @@
         </el-table>
         <div class="pub-page">
           <el-pagination
-            :current-page="pageNum"
+            :current-page="searchBuffer.pageNum"
             :page-sizes="[10, 20, 50, 100, 200, 500]"
-            :page-size="pageSize"
+            :page-size="searchBuffer.pageSize"
             :total="total"
             v-if="total>0"
             background
@@ -679,6 +676,9 @@
           },
           {
             url: '../../../static/image/back4.jpg'
+          },
+          {
+            url: '../../../static/image/Tulips.jpg'
           }
         ],
         // 保存搜索条件
@@ -743,13 +743,13 @@
       },
       // 分页公用 -- 列表方法名必须是getListData
       getListData () {
-        let _this = this
-        _this.searchBuffer.pageNum = _this.pageNum
-        _this.searchBuffer.pageSize = _this.pageSize
-        _this.$axios.get('../../../static/queryPage.json', _this.searchBuffer).then((res) => {
-          _this.tableData = res.data.list
-          _this.total = res.data.total
-        })
+        // let _this = this
+        // _this.searchBuffer.pageNum = _this.pageNum
+        // _this.searchBuffer.pageSize = _this.pageSize
+        // _this.$axios.get('../../../static/queryPage.json', _this.searchBuffer).then((res) => {
+        //   _this.tableData = res.data.list
+        //   _this.total = res.data.total
+        // })
       }
     }
   }
