@@ -128,7 +128,7 @@ export default {
     top: 0;
     bottom: 0;
     background: rgba(0,0,0,.3);
-    z-index: 999;
+    z-index: 999999;
     display: flex;
     flex-direction: column;
     justify-content: center;
