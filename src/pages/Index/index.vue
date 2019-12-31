@@ -10,6 +10,9 @@
       <router-link to="/compents/jsFunction">
         <span>js常用方法</span>
       </router-link>
+      <router-link to="/compents/commonDate">
+        <span>日期控件</span>
+      </router-link>
     </div>
   </div>
 </template>
@@ -41,7 +44,7 @@
   }
   .el-collapse{
     margin-top: 20px;
-    width: 50%;
+    width: 70%;
   }
   .el-collapse-item__header{
     background: lightblue;

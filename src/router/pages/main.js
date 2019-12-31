@@ -31,6 +31,12 @@ const page = [
         meta: {title: 'js常用发放'},
         component: resolve => require(['@/pages/compents/jsFunction.vue'], resolve),
         name: 'jsFunction'
+      },
+      {
+        path: '/compents/commonDate',
+        meta: {title: '日期控件'},
+        component: resolve => require(['@/pages/compents/commonDate.vue'], resolve),
+        name: 'jsFunction'
       }
     ]
   }
