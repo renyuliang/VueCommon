@@ -17,8 +17,8 @@
       <div class="imgInner" :class="{'scrollbar':showScroll}">
         <img :src="imgSrc" alt="" class="showImg">
       </div>
-      <img src="../../static/image/prev.png" class="imgbtn prev" @click="prev(imgSrc)" v-if="isShowBtnPrev"><img src="" alt="">
-      <img src="../../static/image/next.png" class="imgbtn next" @click="next(imgSrc)" v-if="isShowBtnNext"><img src="" alt="">
+      <img src="../../static/image/prev.png" class="imgbtn prev" @click="prev(changeIndex)" v-if="isShowBtnPrev"><img src="" alt="">
+      <img src="../../static/image/next.png" class="imgbtn next" @click="next(changeIndex)" v-if="isShowBtnNext"><img src="" alt="">
     </div>
   </div>
 </template>
@@ -73,9 +73,9 @@ export default {
       }
     },
     // 下一张
-    next(url) {
+    next(setIndex) {
       this.imgSrcList.forEach((item, index) => {
-        if (url === item.url) {
+        if (setIndex === item.index) {
           this.changeIndex = index + 1
           // 判断是否是最后一张
           this.isShowBtnNext = this.changeIndex >= (this.imgSrcList.length - 1) ? false : true
@@ -88,9 +88,9 @@ export default {
       })
     },
     // 上一张
-    prev(url) {
+    prev(setIndex) {
       this.imgSrcList.forEach((item, index) => {
-        if (url === item.url) {
+        if (setIndex === item.index) {
           this.changeIndex = index - 1
           // 判断是否是第一张
           this.isShowBtnPrev = this.changeIndex == 0 ? false : true

@@ -666,19 +666,28 @@
         imgSrcListIndex: '',
         imgList: [
           {
-            url: '../../../static/image/back1.jpg'
+            url: '../../../static/image/back1.jpg',
+            index: 0
           },
           {
-            url: '../../../static/image/back2.jpg'
+            url: '../../../static/image/back2.jpg',
+            index: 1
           },
           {
-            url: '../../../static/image/back3.jpg'
+            url: '../../../static/image/back3.jpg',
+            index: 2
           },
           {
-            url: '../../../static/image/back4.jpg'
+            url: '../../../static/image/back4.jpg',
+            index: 3
           },
           {
-            url: '../../../static/image/Tulips.jpg'
+            url: '../../../static/image/Tulips.jpg',
+            index: 4
+          },
+          {
+            url: '../../../static/image/Tulips.jpg',
+            index: 5
           }
         ],
         // 保存搜索条件
