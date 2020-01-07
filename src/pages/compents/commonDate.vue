@@ -193,7 +193,7 @@
             let curDate = (new Date()).getTime()
             let three = parseInt(this.getDaysBetween(val, new Date().toLocaleDateString()))
             let threeMonths = curDate - three
-            return time.getTime() <= threeMonths || time.getTime() > Date.now()
+            return time.getTime() <= threeMonths
           }
         }
       },
@@ -202,16 +202,19 @@
           disabledDate: (time) => {
             let curDate = (new Date()).getTime()
             let three = parseInt(this.getDaysBetween(val, new Date().toLocaleDateString()) - (1 * 24 * 60 * 60 * 1000))
-            let threeMonths = curDate - three
+            let threeMonths = curDate - (three + (2 * 24 * 60 * 60 * 1000))
             return time.getTime() > Date.now() || time.getTime() > threeMonths
           }
         }
       },
       getDaysBetween(dateString1, dateString2) {
         // 1 是选择的日期，2 是当前的日期
-        let startDate = Date.parse(dateString1.replace('/-/g', '/'))
+        let startDate = ''
+        if (dateString1) {
+          startDate = Date.parse(dateString1.replace(/-/g, '/'))
+        }
         let endDate = Date.parse(dateString2)
-        let diffDate = (endDate - startDate) + 1 * 24 * 60 * 60 * 1000
+        let diffDate = (endDate - startDate)
         let days = (diffDate / (1 * 24 * 60 * 60 * 1000)) * 24 * 3600 * 1000
         return days
       },
