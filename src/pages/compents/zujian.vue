@@ -688,6 +688,10 @@
           {
             url: '../../../static/image/Tulips.jpg',
             index: 5
+          },
+          {
+            url: '../../../static/image/99.jpg',
+            index: 6
           }
         ],
         // 保存搜索条件

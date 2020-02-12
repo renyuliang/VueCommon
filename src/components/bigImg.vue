@@ -105,6 +105,7 @@ export default {
     // 判断图片高度，设置滚动条
     setScroll(){
       setTimeout(()=>{
+        document.getElementsByClassName('showImg')[0].scrollTop = 0
         let imgHeiht = document.getElementsByClassName('showImg')[0].clientHeight
         // 图片高度大于屏幕高度
         if (imgHeiht > (window.innerHeight/1.1)) {
@@ -143,10 +144,7 @@ export default {
       overflow: hidden;
       .imgInner{
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        text-align: center;
         img{
           max-width: 100%;
         }
