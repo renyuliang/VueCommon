@@ -114,7 +114,7 @@
               // 自定义搜索条件
               searchInitList: [
                 {
-                  // searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
+                  // searchType: 'input', // 判断搜索类型为 input,可忽略不写
                   searchType: 'Number', // 判断只能输入正数字
                   title: '输入数字1',
                   maxlength: 10,
@@ -123,7 +123,7 @@
                   placeholder: '只能输入数字'
                 },
                 {
-                  searchStyle: 'input', // 判断搜索类型为 input
+                  searchType: 'input', // 判断搜索类型为 input
                   title: '标题11',
                   maxlength: 10,
                   searchName: 'title1', // 查询条件名称 -- 接口字段名称
@@ -131,7 +131,7 @@
                   placeholder: '请输入'
                 },
                 {
-                  searchStyle: 'select', // 判断搜索类型为 select 下拉
+                  searchType: 'select', // 判断搜索类型为 select 下拉
                   title: '标题22',
                   searchName: 'title2', // 查询条件名称 -- 接口字段名称
                   modelName: '', // v-model的值(这个参数不用动，直接用)
@@ -205,7 +205,7 @@
               // 自定义搜索条件
               searchInitList: [
                 {
-                  // searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
+                  // searchType: 'input', // 判断搜索类型为 input,可忽略不写
                   searchType: 'Number', // 判断只能输入正数字
                   title: '输入数字1',
                   maxlength: 10,
@@ -214,7 +214,7 @@
                   placeholder: '只能输入数字'
                 },
                 {
-                  searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
+                  searchType: 'input', // 判断搜索类型为 input,可忽略不写
                   title: '标题11',
                   maxlength: 10,
                   searchName: 'title1', // 查询条件名称 -- 接口字段名称
@@ -222,7 +222,7 @@
                   placeholder: '请输入'
                 },
                 {
-                  searchStyle: 'select', // 判断搜索类型为 select 下拉
+                  searchType: 'select', // 判断搜索类型为 select 下拉
                   title: '标题22',
                   searchName: 'title2', // 查询条件名称 -- 接口字段名称
                   modelName: '', // v-model的值(这个参数不用动，直接用)
@@ -590,7 +590,7 @@
         // 自定义搜索条件
         searchInitList: [
           {
-            // searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
+            // searchType: 'input', // 判断搜索类型为 input,可忽略不写
             searchType: 'Number', // 判断只能输入正数字
             title: '输入数字1',
             maxlength: 10,
@@ -599,7 +599,7 @@
             placeholder: '只能输入数字'
           },
           {
-            // searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
+            // searchType: 'input', // 判断搜索类型为 input,可忽略不写
             searchType: 'Number', // 判断只能输入正数字
             title: '输入数字2',
             maxlength: 10,
@@ -608,7 +608,7 @@
             placeholder: '只能输入数字'
           },
           {
-            // searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
+            // searchType: 'input', // 判断搜索类型为 input,可忽略不写
             title: '标题11',
             maxlength: 10,
             searchName: 'titleInput1', // 查询条件名称 -- 接口字段名称
@@ -616,7 +616,7 @@
             placeholder: '请输入'
           },
           {
-            // searchStyle: 'input', // 判断搜索类型为 input,可忽略不写
+            // searchType: 'input', // 判断搜索类型为 input,可忽略不写
             title: '标题22',
             maxlength: 10,
             searchName: 'titleInput2', // 查询条件名称 -- 接口字段名称
@@ -624,7 +624,7 @@
             placeholder: '请输入'
           },
           {
-            searchStyle: 'select', // 判断搜索类型为 select 下拉
+            searchType: 'select', // 判断搜索类型为 select 下拉
             title: '标题33',
             searchName: 'titleSelect', // 查询条件名称 -- 接口字段名称
             modelName: '', // v-model的值(这个参数不用动，直接用)
