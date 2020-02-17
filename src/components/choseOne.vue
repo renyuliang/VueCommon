@@ -111,6 +111,8 @@
       searchInitList: Array,
       // table 列表项
       tableInitProps: Array,
+      // 外部传入的固定参数，如id：30
+      getPramas:{},
       // table 接口请求
       tableInitUrl: ''
     },
@@ -126,9 +128,22 @@
         selectUser: ''
       }
     },
-    mounted () {
-      this.loadPage()
+    watch: {
+      'dialogVisible'(val){
+        // 打开弹窗
+        if (val) {
+          this.loadPage()
+        }
+      },
+      'getPramas'(val){
+        // 判断是否传入了外部固定参数
+        let initObj = Object.keys(val)
+        if (initObj.length !== 0){
+          Object.assign(this.query, val)
+        }
+      }
     },
+    mounted () {},
     methods: {
       changeInput(val2,valOption) {
         for (var i = 0; i < this.searchInitList.length; i++) {

@@ -121,6 +121,8 @@
       searchInitList: Array,
       // table 列表项
       tableInitProps: Array,
+      // 外部传入的固定参数，如id：30
+      getPramas:{},
       // table 接口请求
       tableInitUrl: '',
       // 已选择
@@ -135,7 +137,6 @@
         selectList: [], // 选择的医院
         selectStoreList: [], // 临时选择的医院
         query: {
-          type: 2, // 此版本 固定参数
           pageNum: 1,
           pageSize: 8
         }
@@ -151,6 +152,13 @@
           this.selectList = this.checkedList
         } else {
           this.selectList = []
+        }
+      },
+      'getPramas'(val){
+        // 判断是否传入了外部固定参数
+        let initObj = Object.keys(val)
+        if (initObj.length !== 0){
+          Object.assign(this.query, val)
         }
       }
     },

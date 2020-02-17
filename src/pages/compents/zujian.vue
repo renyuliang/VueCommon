@@ -184,6 +184,7 @@
         :searchInitList="searchInitList"
         :tableInitProps="tableInitProps"
         :tableInitUrl="'/static/queryPage.json'"
+        :get-pramas="{id:1,type:2}"
         @on-cancel="dialogChoseOne = false"
         @on-confirm="confirmName"/>
       <el-collapse>
@@ -650,6 +651,10 @@
           {
             name: 'mobile',
             label: '电话'
+          },
+          {
+            name: 'departmentName',
+            label: '部门'
           }
         ],
         // 动态输入模糊匹配
